@@ -1,0 +1,7 @@
+.point {
+  height: 4px;
+  width: 4px;
+  background-color: white;
+  border-radius: 130%;
+  display: inline-block;
+}
