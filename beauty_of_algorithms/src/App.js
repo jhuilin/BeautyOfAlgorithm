@@ -1,13 +1,11 @@
 import React from "react";
-import Navigator from "./components/navigator";
-import Display from "./components/display";
 import "./App.css";
+import Visualizer from "./Visualizer/Visualizer";
 
 function App() {
   return (
     <div className="App">
-      <Navigator />
-      <Display />
+      <Visualizer />
     </div>
   );
 }
