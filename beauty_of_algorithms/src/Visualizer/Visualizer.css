@@ -10,21 +10,19 @@
 }
 
 .buttons button {
-  background-color: red;
+  background-color: #47535e;
   border: none;
   color: #eaf0f1;
   text-align: center;
-  text-decoration: none;
   cursor: pointer;
   outline: 0;
   display: block; /* Make the buttons appear below each other */
-  font: 15px "Century Gothic", Futura, sans-serif;
 }
 .buttons button:not(:last-child) {
   border-bottom: none; /* Prevent double borders */
 }
 
 /* Add a background color on hover */
-/* .buttons button:hover {
-    background-color: #3e8e41;
-} */
+.buttons button:hover {
+  background-color: #3e8e41;
+}
