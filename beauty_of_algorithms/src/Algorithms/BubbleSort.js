@@ -1,10 +1,11 @@
+import { isEqual } from "./helper/IsEqual";
+import { swap } from "./helper/swap";
 export function getBubbleSortAnimations(array) {
   let animations = [];
   let auxillaryArray = array.slice();
   bubbleSort(auxillaryArray, animations);
   const sortedArray = array.slice().sort((a, b) => a - b);
   console.log("sort works correctly? ", isEqual(sortedArray, auxillaryArray));
-  array = auxillaryArray;
   return animations;
 }
 
@@ -24,22 +25,4 @@ function bubbleSort(auxillaryArray, animations) {
       }
     }
   }
-}
-
-function swap(auxillaryArray, firstIndex, secondIndex) {
-  let temp = auxillaryArray[firstIndex];
-  auxillaryArray[firstIndex] = auxillaryArray[secondIndex];
-  auxillaryArray[secondIndex] = temp;
-}
-
-function isEqual(firstArray, secondArray) {
-  if (firstArray.length !== secondArray.length) {
-    return false;
-  }
-  for (let i = 0; i < firstArray.length; i++) {
-    if (firstArray[i] !== secondArray[i]) {
-      return false;
-    }
-  }
-  return true;
 }
