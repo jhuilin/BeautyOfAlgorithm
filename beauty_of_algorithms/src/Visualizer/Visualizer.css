@@ -8,6 +8,9 @@
   display: inline-block; /* arranges the array bars in horizontal way*/
   margin: 0 2px; /*Top,Bottom -> 0px Left,Right -> 1px*/
 }
+.dot {
+  border-radius: 50%;
+}
 
 .buttons button {
   background-color: #47535e;

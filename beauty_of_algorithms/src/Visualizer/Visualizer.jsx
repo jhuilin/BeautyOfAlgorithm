@@ -4,18 +4,23 @@ import { getBubbleSortAnimations } from "../Algorithms/BubbleSort";
 
 let WINDOW_WIDTH = window.innerWidth;
 let WINDOW_HEIGHT = window.innerHeight;
-let NUMBER_OF_ARRAY_BARS = parseInt((WINDOW_WIDTH - 200) / 8);
+let SIZE_OF_ARRAY = parseInt((WINDOW_WIDTH - 30) / 8);
 
 function reportWindowSize() {
   WINDOW_WIDTH = window.innerWidth;
   WINDOW_HEIGHT = window.innerHeight;
-  NUMBER_OF_ARRAY_BARS = parseInt((WINDOW_WIDTH - 200) / 8);
+  SIZE_OF_ARRAY = parseInt((WINDOW_WIDTH - 30) / 8);
 }
 window.onresize = reportWindowSize;
 
 const PRIMARY_COLOR = "white";
 const SECONDARY_COLOR = "red";
-const ANIMATION_SPEED_MS = 0.001;
+
+const PRIMARY_COLOR_FOR_DOT = "black";
+const DOT_PRIMARY_COLOR = "white";
+const DEFAULT_SIZE = "2px";
+const CHANGE_SIZE = "8px";
+const ANIMATION_SPEED_MS = 0.4;
 
 //Tooltips for buttons
 const DISABLED_BUTTON = "Currently Disabled";
@@ -28,16 +33,21 @@ class Visualizer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      array: []
+      array: [],
+      dotPick: false
     };
   }
   componentDidMount() {
     this.resetArray();
   }
-  //Generates new random array
+  select() {
+    this.setState({
+      dotPick: !this.state.dotPick
+    });
+  }
   resetArray() {
     const array = [];
-    for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
+    for (let i = 0; i < SIZE_OF_ARRAY; i++) {
       array.push(randomIntFromInterval(25, WINDOW_HEIGHT - 30));
     }
     this.setState({ array: array });
@@ -45,32 +55,43 @@ class Visualizer extends React.Component {
   }
   disableSortButtons() {
     document.getElementById("bubbleSort").disabled = true;
-    // buttonStyle = document.getElementById("bubbleSort").style;
-    // document.getElementById("bubbleSort").title = DISABLED_BUTTON;
-    // buttonStyle.cursor = "default";
-    // buttonStyle.background = "#000000";
+    const buttonStyle = document.getElementById("bubbleSort").style;
+    document.getElementById("bubbleSort").title = DISABLED_BUTTON;
+    buttonStyle.cursor = "default";
+    buttonStyle.background = "black";
   }
   restoreStoreButtons() {
     document.getElementById("bubbleSort").disabled = false;
-    // buttonStyle = document.getElementById("bubbleSort").style;
-    // document.getElementById("bubbleSort").title = ENABLED_BUTTON.nSquare;
-    // buttonStyle.background = "#47535E";
-    // buttonStyle.cursor = "pointer";
+    const buttonStyle = document.getElementById("bubbleSort").style;
+    document.getElementById("bubbleSort").title = ENABLED_BUTTON.nSquare;
+    buttonStyle.background = "#47535E";
+    buttonStyle.cursor = "pointer";
   }
   bubbleSort() {
     this.disableSortButtons();
-    const [animations, sortArray] = getBubbleSortAnimations(this.state.array);
+    const animations = getBubbleSortAnimations(this.state.array);
     for (let i = 0; i < animations.length; i++) {
       const isColorChange = i % 4 === 0 || i % 4 === 1;
       const arrayBars = document.getElementsByClassName("array-bar");
+      const dots = document.getElementsByClassName("dot");
       if (isColorChange === true) {
-        const color = i % 4 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
+        const color = i % 4 === 0 ? SECONDARY_COLOR : DOT_PRIMARY_COLOR;
+        const size = i % 4 === 0 ? CHANGE_SIZE : DEFAULT_SIZE;
         const [barOneIndex, barTwoIndex] = animations[i];
-        const barOneStyle = arrayBars[barOneIndex].style;
-        const barTwoStyle = arrayBars[barTwoIndex].style;
+        const dotOne = dots[barOneIndex].style;
+        const dotTwo = dots[barTwoIndex].style;
+
+        // const barOneStyle = arrayBars[barOneIndex].style;
+        // const barTwoStyle = arrayBars[barTwoIndex].style;
         setTimeout(() => {
-          barOneStyle.backgroundColor = color;
-          barTwoStyle.backgroundColor = color;
+          // barOneStyle.backgroundColor = color;
+          // barTwoStyle.backgroundColor = color;
+          dotOne.backgroundColor = color;
+          dotOne.height = size;
+          dotOne.width = size;
+          dotTwo.backgroundColor = color;
+          dotTwo.height = size;
+          dotTwo.width = size;
         }, i * ANIMATION_SPEED_MS);
       } else {
         const [barIndex, newHeight] = animations[i];
@@ -83,11 +104,10 @@ class Visualizer extends React.Component {
         }, i * ANIMATION_SPEED_MS);
       }
     }
-    // this.setState({array: sortArray})
-    const RESTORE_TIME = parseInt(
-      (ANIMATION_SPEED_MS * animations.length) / 2 + 3000
-    );
-    setTimeout(() => this.restoreStoreButtons(), RESTORE_TIME);
+    // const RESTORE_TIME = parseInt(
+    //   (ANIMATION_SPEED_MS * animations.length) / 2 + 3000
+    // );
+    // setTimeout(() => this.restoreStoreButtons(), RESTORE_TIME);
   }
   render() {
     const array = this.state.array;
@@ -104,24 +124,46 @@ class Visualizer extends React.Component {
               className="array-bar"
               key={idx}
               style={{
-                backgroundColor: PRIMARY_COLOR,
+                backgroundColor: PRIMARY_COLOR_FOR_DOT,
                 height: `${value}px`
               }}
-            ></div>
+            >
+              <div
+                className="dot"
+                key={idx}
+                style={{
+                  backgroundColor: DOT_PRIMARY_COLOR,
+                  height: DEFAULT_SIZE,
+                  width: DEFAULT_SIZE
+                }}
+              ></div>
+            </div>
           ))}
         </div>
 
         <div className="buttons">
           <button
-            title="Generates a new random array"
+            title="Generate a new array"
             style={{
               position: "relative",
               top: `${(0 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`
             }}
             onClick={() => this.resetArray()}
           >
-            Generate New Array
+            Shuffling The Array
           </button>
+
+          <button
+            title="Display in Dots or Bars"
+            style={{
+              position: "relative",
+              top: `${(0 * (WINDOW_HEIGHT - 20)) / TOTAL_BUTTONS}px`
+            }}
+            onClick={() => this.select()}
+          >
+            Change Mode
+          </button>
+
           <button
             title="O(N^2) Time Complexity"
             id="bubbleSort"

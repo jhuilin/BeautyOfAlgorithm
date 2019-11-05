@@ -5,7 +5,7 @@ export function getBubbleSortAnimations(array) {
   const sortedArray = array.slice().sort((a, b) => a - b);
   console.log("sort works correctly? ", isEqual(sortedArray, auxillaryArray));
   array = auxillaryArray;
-  return [animations, array];
+  return animations;
 }
 
 function bubbleSort(auxillaryArray, animations) {
