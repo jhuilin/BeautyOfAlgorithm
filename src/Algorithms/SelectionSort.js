@@ -16,7 +16,10 @@ function selectionSort(auxillaryArray, animations) {
     let minIndex = i;
     for (let j = i + 1; j < length; j++) {
       animations.push(["comparision1", j, minIndex]);
+      animations.push(["comparision1", minIndex, j]);
       animations.push(["comparision2", j, minIndex]);
+      animations.push(["comparision2", minIndex, j]);
+
       if (auxillaryArray[j] < auxillaryArray[minIndex]) {
         minIndex = j;
       }

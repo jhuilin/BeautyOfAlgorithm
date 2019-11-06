@@ -28,13 +28,19 @@ function Merge(auxillaryArray, l, m, r, animations) {
     // animations.push(["comparision2", i, j]);
     if (left[i] < right[j]) {
       animations.push(["comparision1", index, i]);
+      animations.push(["comparision1", i, index]);
       animations.push(["comparision2", index, i]);
+      animations.push(["comparision2", i, index]);
+
       animations.push(["swap", index, left[i]]);
       auxillaryArray[index] = left[i];
       i += 1;
     } else {
       animations.push(["comparision1", index, j]);
+      animations.push(["comparision1", j, index]);
       animations.push(["comparision2", index, j]);
+      animations.push(["comparision2", j, index]);
+
       animations.push(["swap", index, right[j]]);
       auxillaryArray[index] = right[j];
       j += 1;

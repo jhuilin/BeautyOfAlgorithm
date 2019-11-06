@@ -15,7 +15,10 @@ function insertionSort(auxillaryArray, animations) {
     let j = i;
     while (j > 0 && auxillaryArray[j] < auxillaryArray[j - 1]) {
       animations.push(["comparision1", j - 1, j]);
+      animations.push(["comparision1", j, j - 1]);
       animations.push(["comparision2", j - 1, j]);
+      animations.push(["comparision2", j, j - 1]);
+
       animations.push(["swap", j - 1, auxillaryArray[j]]);
       animations.push(["swap", j, auxillaryArray[j - 1]]);
       swap(auxillaryArray, j - 1, j);

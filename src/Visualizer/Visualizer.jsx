@@ -5,15 +5,16 @@ import { getSelectionSortAnimations } from "../Algorithms/SelectionSort";
 import { getQuickSortAnimations } from "../Algorithms/QuickSort";
 import { getInsertionSortAnimations } from "../Algorithms/InsertionSort";
 import { getMergeSortAnimations } from "../Algorithms/MergeSort";
+import { getBinaryInsertionSortAnimations } from "../Algorithms/BinaryInsertionSort";
 
 let window_width = window.innerWidth;
 let window_height = window.innerHeight;
-let size_of_array = parseInt(window_width / 4.2);
+let size_of_array = parseInt(window_width / 4.1);
 
 function reportWindowSize() {
   window_width = window.innerWidth;
   window_height = window.innerHeight;
-  size_of_array = parseInt(window_width / 4.2);
+  size_of_array = parseInt(window_width / 4.1);
 }
 window.onresize = reportWindowSize;
 
@@ -80,7 +81,6 @@ class Visualizer extends React.Component {
     const QuickButton = document.getElementById("quickSort").style;
     QuickButton.background = "black";
     QuickButton.color = sortingAlgorithm === "QuickSort" ? "#3e8e41" : "black";
-
     QuickButton.cursor = "default";
 
     document.getElementById("insertionSort").disabled = true;
@@ -88,7 +88,6 @@ class Visualizer extends React.Component {
     InsertionButton.background = "black";
     InsertionButton.color =
       sortingAlgorithm === "InsertionSort" ? "#3e8e41" : "black";
-
     InsertionButton.cursor = "default";
 
     document.getElementById("mergeSort").disabled = true;
@@ -96,6 +95,14 @@ class Visualizer extends React.Component {
     MergeButton.background = "black";
     MergeButton.color = sortingAlgorithm === "MergeSort" ? "#3e8e41" : "black";
     MergeButton.cursor = "default";
+
+    document.getElementById("binaryInsertionSort").disabled = true;
+    const BinaryInsertionButton = document.getElementById("binaryInsertionSort")
+      .style;
+    BinaryInsertionButton.background = "black";
+    BinaryInsertionButton.color =
+      sortingAlgorithm === "BinaryInsertionSort" ? "#3e8e41" : "black";
+    BinaryInsertionButton.cursor = "default";
   }
 
   restoreShffling() {
@@ -142,6 +149,13 @@ class Visualizer extends React.Component {
     MergeButton.background = "#47535E";
     MergeButton.color = "white";
     MergeButton.cursor = "pointer";
+
+    document.getElementById("binaryInsertionSort").disabled = false;
+    const BinaryInsertionButton = document.getElementById("binaryInsertionSort")
+      .style;
+    BinaryInsertionButton.background = "#47535E";
+    BinaryInsertionButton.color = "white";
+    BinaryInsertionButton.cursor = "pointer";
   }
 
   sort(sortingAlgorithm) {
@@ -160,6 +174,9 @@ class Visualizer extends React.Component {
     } else if (sortingAlgorithm === "MergeSort") {
       animations = getMergeSortAnimations(this.state.array);
       Animation_speed_ms = 1;
+    } else if (sortingAlgorithm === "BinaryInsertionSort") {
+      animations = getBinaryInsertionSortAnimations(this.state.array);
+      Animation_speed_ms = 0.1;
     }
     for (let i = 0; i < animations.length; i++) {
       const isColorChange =
@@ -175,9 +192,6 @@ class Visualizer extends React.Component {
             ? Secondary_size
             : Primary_size;
         const [temp, barOneIndex, barTwoIndex] = animations[i];
-        if (temp === "none") {
-          continue;
-        }
         const dotOne = dots[barOneIndex].style;
         const dotTwo = dots[barTwoIndex].style;
         const barOneStyle = this.state.dotPick
@@ -200,9 +214,6 @@ class Visualizer extends React.Component {
         }, i * Animation_speed_ms);
       } else {
         const [temp, barIndex, newHeight] = animations[i];
-        if (temp === "none") {
-          continue;
-        }
         const barStyle = arrayBars[barIndex].style;
         setTimeout(() => {
           barStyle.height = `${newHeight}px`;
@@ -266,13 +277,23 @@ class Visualizer extends React.Component {
             }}
             onClick={() => this.selectMode()}
           >
-            Change Mode
+            Change Display Mode
+          </button>
+          <button
+            id="binaryInsertionSort"
+            style={{
+              position: "relative",
+              top: `${(0.02 * (window_height - 20)) / Total_buttons}px`
+            }}
+            onClick={() => this.sort("BinaryInsertionSort")}
+          >
+            Binary Insertion Sort
           </button>
           <button
             id="selectionSort"
             style={{
               position: "relative",
-              top: `${(0.02 * (window_height - 20)) / Total_buttons}px`
+              top: `${(0.04 * (window_height - 20)) / Total_buttons}px`
             }}
             onClick={() => this.sort("SelectionSort")}
           >
@@ -282,7 +303,7 @@ class Visualizer extends React.Component {
             id="insertionSort"
             style={{
               position: "relative",
-              top: `${(0.04 * (window_height - 20)) / Total_buttons}px`
+              top: `${(0.05 * (window_height - 20)) / Total_buttons}px`
             }}
             onClick={() => this.sort("InsertionSort")}
           >
@@ -292,7 +313,7 @@ class Visualizer extends React.Component {
             id="bubbleSort"
             style={{
               position: "relative",
-              top: `${(0.05 * (window_height - 20)) / Total_buttons}px`
+              top: `${(0.06 * (window_height - 20)) / Total_buttons}px`
             }}
             onClick={() => this.sort("BubbleSort")}
           >
@@ -302,7 +323,7 @@ class Visualizer extends React.Component {
             id="mergeSort"
             style={{
               position: "relative",
-              top: `${(0.06 * (window_height - 20)) / Total_buttons}px`
+              top: `${(0.07 * (window_height - 20)) / Total_buttons}px`
             }}
             onClick={() => this.sort("MergeSort")}
           >
@@ -312,7 +333,7 @@ class Visualizer extends React.Component {
             id="quickSort"
             style={{
               position: "relative",
-              top: `${(0.07 * (window_height - 20)) / Total_buttons}px`
+              top: `${(0.08 * (window_height - 20)) / Total_buttons}px`
             }}
             onClick={() => this.sort("QuickSort")}
           >
