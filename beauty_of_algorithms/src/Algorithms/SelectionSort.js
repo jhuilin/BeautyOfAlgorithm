@@ -15,14 +15,14 @@ function selectionSort(auxillaryArray, animations) {
   for (let i = 0; i < length - 1; i++) {
     let minIndex = i;
     for (let j = i + 1; j < length; j++) {
-      animations.push([j, minIndex]);
-      animations.push([j, minIndex]);
+      animations.push(["comparision1", j, minIndex]);
+      animations.push(["comparision2", j, minIndex]);
       if (auxillaryArray[j] < auxillaryArray[minIndex]) {
         minIndex = j;
       }
     }
-    animations.push([minIndex, auxillaryArray[i]]);
-    animations.push([i, auxillaryArray[minIndex]]);
+    animations.push(["swap", minIndex, auxillaryArray[i]]);
+    animations.push(["swap", i, auxillaryArray[minIndex]]);
     // Swap the found minimum element with the first element
     swap(auxillaryArray, minIndex, i);
   }

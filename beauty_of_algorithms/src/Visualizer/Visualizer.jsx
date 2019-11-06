@@ -2,15 +2,18 @@ import React from "react";
 import "./Visualizer.css";
 import { getBubbleSortAnimations } from "../Algorithms/BubbleSort";
 import { getSelectionSortAnimations } from "../Algorithms/SelectionSort";
+import { getQuickSortAnimations } from "../Algorithms/QuickSort";
+import { getInsertionSortAnimations } from "../Algorithms/InsertionSort";
+import { getMergeSortAnimations } from "../Algorithms/MergeSort";
 
 let window_width = window.innerWidth;
 let window_height = window.innerHeight;
-let size_of_array = parseInt((window_width - 20) / 8);
+let size_of_array = parseInt(window_width / 4.2);
 
 function reportWindowSize() {
   window_width = window.innerWidth;
   window_height = window.innerHeight;
-  size_of_array = parseInt((window_width - 20) / 8);
+  size_of_array = parseInt(window_width / 4.2);
 }
 window.onresize = reportWindowSize;
 
@@ -18,9 +21,9 @@ const Primary_color = "white";
 const Secondary_color = "red";
 
 const Primary_color_for_dot = "black";
-const Primary_size = "2px";
+const Primary_size = "1.5px";
 const Secondary_size = "8px";
-const Animation_speed_ms = 0.4;
+let Animation_speed_ms = 0.1;
 
 class Visualizer extends React.Component {
   constructor(props) {
@@ -47,63 +50,134 @@ class Visualizer extends React.Component {
     this.restoreButtons();
   }
 
-  disableSortButtons() {
+  disableSortButtons(sortingAlgorithm) {
     document.getElementById("shuffling").disabled = true;
     const shuffButton = document.getElementById("shuffling").style;
     shuffButton.background = "black";
+    shuffButton.color = "black";
     shuffButton.cursor = "default";
 
     document.getElementById("mode").disabled = true;
     const modeButton = document.getElementById("mode").style;
     modeButton.background = "black";
+    modeButton.color = "black";
     modeButton.cursor = "default";
 
     document.getElementById("bubbleSort").disabled = true;
     const buttonStyle = document.getElementById("bubbleSort").style;
     buttonStyle.background = "black";
+    buttonStyle.color = sortingAlgorithm === "BubbleSort" ? "#3e8e41" : "black";
     buttonStyle.cursor = "default";
 
-    document.getElementById("SelectionSort").disabled = true;
-    const SelectionButton = document.getElementById("SelectionSort").style;
+    document.getElementById("selectionSort").disabled = true;
+    const SelectionButton = document.getElementById("selectionSort").style;
     SelectionButton.background = "black";
+    SelectionButton.color =
+      sortingAlgorithm === "SelectionSort" ? "#3e8e41" : "black";
     SelectionButton.cursor = "default";
+
+    document.getElementById("quickSort").disabled = true;
+    const QuickButton = document.getElementById("quickSort").style;
+    QuickButton.background = "black";
+    QuickButton.color = sortingAlgorithm === "QuickSort" ? "#3e8e41" : "black";
+
+    QuickButton.cursor = "default";
+
+    document.getElementById("insertionSort").disabled = true;
+    const InsertionButton = document.getElementById("insertionSort").style;
+    InsertionButton.background = "black";
+    InsertionButton.color =
+      sortingAlgorithm === "InsertionSort" ? "#3e8e41" : "black";
+
+    InsertionButton.cursor = "default";
+
+    document.getElementById("mergeSort").disabled = true;
+    const MergeButton = document.getElementById("mergeSort").style;
+    MergeButton.background = "black";
+    MergeButton.color = sortingAlgorithm === "MergeSort" ? "#3e8e41" : "black";
+    MergeButton.cursor = "default";
   }
 
-  restoreButtons() {
+  restoreShffling() {
     document.getElementById("shuffling").disabled = false;
     const shuffButton = document.getElementById("shuffling").style;
     shuffButton.background = "#47535E";
+    shuffButton.color = "white";
     shuffButton.cursor = "pointer";
 
     document.getElementById("mode").disabled = false;
     const modeButton = document.getElementById("mode").style;
     modeButton.background = "#47535E";
+    modeButton.color = "white";
     modeButton.cursor = "pointer";
+  }
 
+  restoreButtons() {
     document.getElementById("bubbleSort").disabled = false;
     const buttonStyle = document.getElementById("bubbleSort").style;
     buttonStyle.background = "#47535E";
+    buttonStyle.color = "white";
     buttonStyle.cursor = "pointer";
 
-    document.getElementById("SelectionSort").disabled = false;
-    const SelectionButton = document.getElementById("SelectionSort").style;
+    document.getElementById("selectionSort").disabled = false;
+    const SelectionButton = document.getElementById("selectionSort").style;
     SelectionButton.background = "#47535E";
+    SelectionButton.color = "white";
     SelectionButton.cursor = "pointer";
+
+    document.getElementById("quickSort").disabled = false;
+    const QuickButton = document.getElementById("quickSort").style;
+    QuickButton.background = "#47535E";
+    QuickButton.color = "white";
+    QuickButton.cursor = "pointer";
+
+    document.getElementById("insertionSort").disabled = false;
+    const InsertionButton = document.getElementById("insertionSort").style;
+    InsertionButton.background = "#47535E";
+    InsertionButton.color = "white";
+    InsertionButton.cursor = "pointer";
+
+    document.getElementById("mergeSort").disabled = false;
+    const MergeButton = document.getElementById("mergeSort").style;
+    MergeButton.background = "#47535E";
+    MergeButton.color = "white";
+    MergeButton.cursor = "pointer";
   }
 
-  bubbleSort() {
-    this.disableSortButtons();
-    const animations = getBubbleSortAnimations(this.state.array);
+  sort(sortingAlgorithm) {
+    this.disableSortButtons(sortingAlgorithm);
+    let animations = getBubbleSortAnimations(this.state.array);
+    Animation_speed_ms = 0.2;
+    if (sortingAlgorithm === "SelectionSort") {
+      animations = getSelectionSortAnimations(this.state.array);
+      Animation_speed_ms = 0.2;
+    } else if (sortingAlgorithm === "QuickSort") {
+      animations = getQuickSortAnimations(this.state.array);
+      Animation_speed_ms = 0.8;
+    } else if (sortingAlgorithm === "InsertionSort") {
+      animations = getInsertionSortAnimations(this.state.array);
+      Animation_speed_ms = 0.2;
+    } else if (sortingAlgorithm === "MergeSort") {
+      animations = getMergeSortAnimations(this.state.array);
+      Animation_speed_ms = 1;
+    }
     for (let i = 0; i < animations.length; i++) {
-      const isColorChange = i % 4 === 0 || i % 4 === 1;
+      const isColorChange =
+        animations[i][0] === "comparision1" ||
+        animations[i][0] === "comparision2";
       const arrayBars = document.getElementsByClassName("array-bar");
       const dots = document.getElementsByClassName("dot");
       if (isColorChange === true) {
-        const color = i % 4 === 0 ? Secondary_color : Primary_color;
+        const color =
+          animations[i][0] === "comparision1" ? Secondary_color : Primary_color;
         const size =
-          i % 4 === 0 && this.state.dotPick ? Secondary_size : Primary_size;
-        const [barOneIndex, barTwoIndex] = animations[i];
-
+          animations[i][0] === "comparision1" && this.state.dotPick
+            ? Secondary_size
+            : Primary_size;
+        const [temp, barOneIndex, barTwoIndex] = animations[i];
+        if (temp === "none") {
+          continue;
+        }
         const dotOne = dots[barOneIndex].style;
         const dotTwo = dots[barTwoIndex].style;
         const barOneStyle = this.state.dotPick
@@ -125,8 +199,8 @@ class Visualizer extends React.Component {
           dotTwo.width = size;
         }, i * Animation_speed_ms);
       } else {
-        const [barIndex, newHeight] = animations[i];
-        if (barIndex === -1) {
+        const [temp, barIndex, newHeight] = animations[i];
+        if (temp === "none") {
           continue;
         }
         const barStyle = arrayBars[barIndex].style;
@@ -135,10 +209,8 @@ class Visualizer extends React.Component {
         }, i * Animation_speed_ms);
       }
     }
-    const Restore_time = parseInt(
-      (Animation_speed_ms * animations.length) / 2 + 3500
-    );
-    setTimeout(() => this.restoreButtons(), Restore_time);
+    const Restore_time = parseInt(Animation_speed_ms * animations.length);
+    setTimeout(() => this.restoreShffling(), Restore_time);
   }
   render() {
     const array = this.state.array;
@@ -190,32 +262,61 @@ class Visualizer extends React.Component {
             id="mode"
             style={{
               position: "relative",
-              top: `${(0 * (window_height - 20)) / Total_buttons}px`
+              top: `${(0.01 * (window_height - 20)) / Total_buttons}px`
             }}
             onClick={() => this.selectMode()}
           >
             Change Mode
           </button>
           <button
+            id="selectionSort"
+            style={{
+              position: "relative",
+              top: `${(0.02 * (window_height - 20)) / Total_buttons}px`
+            }}
+            onClick={() => this.sort("SelectionSort")}
+          >
+            Selection Sort
+          </button>
+          <button
+            id="insertionSort"
+            style={{
+              position: "relative",
+              top: `${(0.04 * (window_height - 20)) / Total_buttons}px`
+            }}
+            onClick={() => this.sort("InsertionSort")}
+          >
+            Insertion Sort
+          </button>
+          <button
             id="bubbleSort"
             style={{
               position: "relative",
-              top: `${(2.5 * (window_height - 20)) / Total_buttons}px`
+              top: `${(0.05 * (window_height - 20)) / Total_buttons}px`
             }}
-            onClick={() => this.bubbleSort()}
+            onClick={() => this.sort("BubbleSort")}
           >
             Bubble Sort
           </button>
-
           <button
-            id="SelectionSort"
+            id="mergeSort"
             style={{
               position: "relative",
-              top: `${(2.5 * (window_height - 20)) / Total_buttons}px`
+              top: `${(0.06 * (window_height - 20)) / Total_buttons}px`
             }}
-            onClick={() => this.bubbleSort()}
+            onClick={() => this.sort("MergeSort")}
           >
-            Selection Sort
+            Merge Sort
+          </button>
+          <button
+            id="quickSort"
+            style={{
+              position: "relative",
+              top: `${(0.07 * (window_height - 20)) / Total_buttons}px`
+            }}
+            onClick={() => this.sort("QuickSort")}
+          >
+            Quick Sort
           </button>
         </div>
       </>
