@@ -1,5 +1,4 @@
 import { isEqual } from "./helper/IsEqual";
-import { swap } from "./helper/swap";
 
 export function getBinaryInsertionSortAnimations(array) {
   let animations = [];
@@ -10,11 +9,11 @@ export function getBinaryInsertionSortAnimations(array) {
   return animations;
 }
 function binaryInsertionSort(auxillaryArray, animations) {
-  let i, loc, j, k, selected;
+  let i, loc, j, selected;
   for (i = 1; i < auxillaryArray.length; i++) {
     j = i - 1;
     selected = auxillaryArray[i];
-    loc = binarySearch(auxillaryArray, selected, 0, j, animations, i);
+    loc = binarySearch(auxillaryArray, selected, 0, j);
     while (j >= loc) {
       animations.push(["comparision1", j, loc]);
       animations.push(["comparision1", loc, j]);
@@ -24,10 +23,11 @@ function binaryInsertionSort(auxillaryArray, animations) {
       auxillaryArray[j + 1] = auxillaryArray[j];
       j -= 1;
     }
+    animations.push(["swap", j + 1, selected]);
     auxillaryArray[j + 1] = selected;
   }
 }
-function binarySearch(auxillaryArray, item, low, high, animations, index) {
+function binarySearch(auxillaryArray, item, low, high) {
   if (high <= low) {
     if (item > auxillaryArray[low]) {
       return low + 1;
@@ -35,11 +35,11 @@ function binarySearch(auxillaryArray, item, low, high, animations, index) {
     return low;
   }
   let mid = Math.floor((high + low) / 2);
-  if (item == auxillaryArray[mid]) {
+  if (item === auxillaryArray[mid]) {
     return mid + 1;
   }
   if (item > auxillaryArray[mid]) {
-    return binarySearch(auxillaryArray, item, mid + 1, high, animations, index);
+    return binarySearch(auxillaryArray, item, mid + 1, high);
   }
-  return binarySearch(auxillaryArray, item, low, mid - 1, animations, index);
+  return binarySearch(auxillaryArray, item, low, mid - 1);
 }

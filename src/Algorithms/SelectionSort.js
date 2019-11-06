@@ -24,6 +24,10 @@ function selectionSort(auxillaryArray, animations) {
         minIndex = j;
       }
     }
+    animations.push(["comparision1", i, minIndex]);
+    animations.push(["comparision1", minIndex, i]);
+    animations.push(["comparision2", i, minIndex]);
+    animations.push(["comparision2", minIndex, i]);
     animations.push(["swap", minIndex, auxillaryArray[i]]);
     animations.push(["swap", i, auxillaryArray[minIndex]]);
     // Swap the found minimum element with the first element

@@ -29,13 +29,9 @@ function partitionArray(auxillaryArray, startIndex, endIndex, animations) {
   let pivotIndex = startIndex;
   for (let i = startIndex; i <= endIndex - 1; i++) {
     animations.push(["comparision1", i, endIndex]);
-    animations.push(["comparision1", endIndex, i]);
     animations.push(["comparision2", i, endIndex]);
-    animations.push(["comparision2", endIndex, i]);
 
-    animations.push(["comparision1", i, pivotIndex]);
     animations.push(["comparision1", pivotIndex, i]);
-    animations.push(["comparision2", i, pivotIndex]);
     animations.push(["comparision2", pivotIndex, i]);
 
     if (auxillaryArray[i] <= pivot) {

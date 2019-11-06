@@ -6,6 +6,8 @@ import { getQuickSortAnimations } from "../Algorithms/QuickSort";
 import { getInsertionSortAnimations } from "../Algorithms/InsertionSort";
 import { getMergeSortAnimations } from "../Algorithms/MergeSort";
 import { getBinaryInsertionSortAnimations } from "../Algorithms/BinaryInsertionSort";
+import { getRadixSortAnimations } from "../Algorithms/RadixSort";
+import { getHeapSortAnimations } from "../Algorithms/HeapSort";
 
 let window_width = window.innerWidth;
 let window_height = window.innerHeight;
@@ -103,6 +105,18 @@ class Visualizer extends React.Component {
     BinaryInsertionButton.color =
       sortingAlgorithm === "BinaryInsertionSort" ? "#3e8e41" : "black";
     BinaryInsertionButton.cursor = "default";
+
+    document.getElementById("radixSort").disabled = true;
+    const RadixButton = document.getElementById("radixSort").style;
+    RadixButton.background = "black";
+    RadixButton.color = sortingAlgorithm === "RadixSort" ? "#3e8e41" : "black";
+    RadixButton.cursor = "default";
+
+    document.getElementById("heapSort").disabled = true;
+    const heapButton = document.getElementById("heapSort").style;
+    heapButton.background = "black";
+    heapButton.color = sortingAlgorithm === "HeapSort" ? "#3e8e41" : "black";
+    heapButton.cursor = "default";
   }
 
   restoreShffling() {
@@ -156,15 +170,27 @@ class Visualizer extends React.Component {
     BinaryInsertionButton.background = "#47535E";
     BinaryInsertionButton.color = "white";
     BinaryInsertionButton.cursor = "pointer";
+
+    document.getElementById("radixSort").disabled = false;
+    const RadixButton = document.getElementById("radixSort").style;
+    RadixButton.background = "#47535E";
+    RadixButton.color = "white";
+    RadixButton.cursor = "pointer";
+
+    document.getElementById("heapSort").disabled = false;
+    const heapButton = document.getElementById("heapSort").style;
+    heapButton.background = "#47535E";
+    heapButton.color = "white";
+    heapButton.cursor = "pointer";
   }
 
   sort(sortingAlgorithm) {
     this.disableSortButtons(sortingAlgorithm);
     let animations = getBubbleSortAnimations(this.state.array);
-    Animation_speed_ms = 0.2;
+    Animation_speed_ms = 0.15;
     if (sortingAlgorithm === "SelectionSort") {
       animations = getSelectionSortAnimations(this.state.array);
-      Animation_speed_ms = 0.2;
+      Animation_speed_ms = 0.1;
     } else if (sortingAlgorithm === "QuickSort") {
       animations = getQuickSortAnimations(this.state.array);
       Animation_speed_ms = 0.8;
@@ -177,6 +203,12 @@ class Visualizer extends React.Component {
     } else if (sortingAlgorithm === "BinaryInsertionSort") {
       animations = getBinaryInsertionSortAnimations(this.state.array);
       Animation_speed_ms = 0.1;
+    } else if (sortingAlgorithm === "RadixSort") {
+      animations = getRadixSortAnimations(this.state.array);
+      Animation_speed_ms = 0.8;
+    } else if (sortingAlgorithm === "HeapSort") {
+      animations = getHeapSortAnimations(this.state.array);
+      Animation_speed_ms = 0.8;
     }
     for (let i = 0; i < animations.length; i++) {
       const isColorChange =
@@ -293,7 +325,7 @@ class Visualizer extends React.Component {
             id="selectionSort"
             style={{
               position: "relative",
-              top: `${(0.04 * (window_height - 20)) / Total_buttons}px`
+              top: `${(0.035 * (window_height - 20)) / Total_buttons}px`
             }}
             onClick={() => this.sort("SelectionSort")}
           >
@@ -303,7 +335,7 @@ class Visualizer extends React.Component {
             id="insertionSort"
             style={{
               position: "relative",
-              top: `${(0.05 * (window_height - 20)) / Total_buttons}px`
+              top: `${(0.045 * (window_height - 20)) / Total_buttons}px`
             }}
             onClick={() => this.sort("InsertionSort")}
           >
@@ -338,6 +370,26 @@ class Visualizer extends React.Component {
             onClick={() => this.sort("QuickSort")}
           >
             Quick Sort
+          </button>
+          <button
+            id="radixSort"
+            style={{
+              position: "relative",
+              top: `${(0.095 * (window_height - 20)) / Total_buttons}px`
+            }}
+            onClick={() => this.sort("RadixSort")}
+          >
+            Radix Sort
+          </button>
+          <button
+            id="heapSort"
+            style={{
+              position: "relative",
+              top: `${(0.11 * (window_height - 20)) / Total_buttons}px`
+            }}
+            onClick={() => this.sort("HeapSort")}
+          >
+            Heap Sort
           </button>
         </div>
       </>
