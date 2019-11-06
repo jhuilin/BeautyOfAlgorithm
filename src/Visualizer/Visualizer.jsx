@@ -12,12 +12,12 @@ import { getCocktailSortAnimations } from "../Algorithms/CocktailSort";
 
 let window_width = window.innerWidth;
 let window_height = window.innerHeight;
-let size_of_array = parseInt(window_width / 4.1);
+let size_of_array = parseInt(window_width / 4.2);
 
 function reportWindowSize() {
   window_width = window.innerWidth;
   window_height = window.innerHeight;
-  size_of_array = parseInt(window_width / 4.1);
+  size_of_array = parseInt(window_width / 4.2);
 }
 window.onresize = reportWindowSize;
 
