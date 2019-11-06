@@ -201,22 +201,22 @@ class Visualizer extends React.Component {
   sort(sortingAlgorithm) {
     this.disableSortButtons(sortingAlgorithm);
     let animations = getBubbleSortAnimations(this.state.array);
-    Animation_speed_ms = 0.15;
+    Animation_speed_ms = 0.25;
     if (sortingAlgorithm === "SelectionSort") {
       animations = getSelectionSortAnimations(this.state.array);
-      Animation_speed_ms = 0.1;
+      Animation_speed_ms = 0.3;
     } else if (sortingAlgorithm === "QuickSort") {
       animations = getQuickSortAnimations(this.state.array);
       Animation_speed_ms = 0.8;
     } else if (sortingAlgorithm === "InsertionSort") {
       animations = getInsertionSortAnimations(this.state.array);
-      Animation_speed_ms = 0.2;
+      Animation_speed_ms = 0.4;
     } else if (sortingAlgorithm === "MergeSort") {
       animations = getMergeSortAnimations(this.state.array);
-      Animation_speed_ms = 1;
+      Animation_speed_ms = 1.1;
     } else if (sortingAlgorithm === "BinaryInsertionSort") {
       animations = getBinaryInsertionSortAnimations(this.state.array);
-      Animation_speed_ms = 0.1;
+      Animation_speed_ms = 0.25;
     } else if (sortingAlgorithm === "RadixSort") {
       animations = getRadixSortAnimations(this.state.array);
       Animation_speed_ms = 0.8;
@@ -225,7 +225,7 @@ class Visualizer extends React.Component {
       Animation_speed_ms = 0.8;
     } else if (sortingAlgorithm === "CocktailSort") {
       animations = getCocktailSortAnimations(this.state.array);
-      Animation_speed_ms = 0.1;
+      Animation_speed_ms = 0.15;
     }
     for (let i = 0; i < animations.length; i++) {
       const isColorChange =
