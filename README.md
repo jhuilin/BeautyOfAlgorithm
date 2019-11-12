@@ -1,7 +1,7 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Built in ReactJS and Bootstrap Web to Created two satisfying animation modes(dots or bars) for visualizing the sorting process of each algorithm. here is website: https://jhuilin.github.io/beauty_of_algorithm
+### Built in ReactJS and Bootstrap Web to Created two satisfying animation modes(dots or bars) for visualizing the sorting process of each algorithm. here is website: https://jhuilin.github.io/beauty_of_algorithm
 ![Finished App](https://github.com/jhuilin/storage/blob/master/beauty.gif)
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 
 ## Available Scripts
