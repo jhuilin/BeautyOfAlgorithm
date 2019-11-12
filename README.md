@@ -1,5 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+#Built in ReactJS and Bootstrap Web to Created two satisfying animation modes(dots or bars) for visualizing the sorting process of each algorithm.
+![Finished App](https://github.com/jhuilin/storage/blob/master/beauty.gif)
+
+
 ## Available Scripts
 
 In the project directory, you can run:
