@@ -25,7 +25,7 @@ const Primary_color = "white";
 const Secondary_color = "red";
 
 const Primary_color_for_dot = "black";
-const Primary_size = "1.5px";
+const Primary_size = "1.7px";
 const Secondary_size = "8px";
 let Animation_speed_ms = 0.1;
 
@@ -34,6 +34,19 @@ class Visualizer extends React.Component {
     super(props);
     this.state = {
       array: [],
+      algorithmSets: [
+        "Mode",
+        "Shuffling",
+        "BubbleSort",
+        "SelectionSort",
+        "QuickSort",
+        "InsertionSort",
+        "MergeSort",
+        "BinaryInsertionSort",
+        "RadixSort",
+        "HeapSort",
+        "CocktailSort"
+      ],
       dotPick: true
     };
   }
@@ -54,148 +67,41 @@ class Visualizer extends React.Component {
     this.restoreButtons();
   }
 
-  disableSortButtons(sortingAlgorithm) {
-    document.getElementById("shuffling").disabled = true;
-    const shuffButton = document.getElementById("shuffling").style;
-    shuffButton.background = "black";
-    shuffButton.color = "black";
-    shuffButton.cursor = "default";
-
-    document.getElementById("mode").disabled = true;
-    const modeButton = document.getElementById("mode").style;
-    modeButton.background = "black";
-    modeButton.color = "black";
-    modeButton.cursor = "default";
-
-    document.getElementById("bubbleSort").disabled = true;
-    const buttonStyle = document.getElementById("bubbleSort").style;
-    buttonStyle.background = "black";
-    buttonStyle.color = sortingAlgorithm === "BubbleSort" ? "#3e8e41" : "black";
-    buttonStyle.cursor = "default";
-
-    document.getElementById("selectionSort").disabled = true;
-    const SelectionButton = document.getElementById("selectionSort").style;
-    SelectionButton.background = "black";
-    SelectionButton.color =
-      sortingAlgorithm === "SelectionSort" ? "#3e8e41" : "black";
-    SelectionButton.cursor = "default";
-
-    document.getElementById("quickSort").disabled = true;
-    const QuickButton = document.getElementById("quickSort").style;
-    QuickButton.background = "black";
-    QuickButton.color = sortingAlgorithm === "QuickSort" ? "#3e8e41" : "black";
-    QuickButton.cursor = "default";
-
-    document.getElementById("insertionSort").disabled = true;
-    const InsertionButton = document.getElementById("insertionSort").style;
-    InsertionButton.background = "black";
-    InsertionButton.color =
-      sortingAlgorithm === "InsertionSort" ? "#3e8e41" : "black";
-    InsertionButton.cursor = "default";
-
-    document.getElementById("mergeSort").disabled = true;
-    const MergeButton = document.getElementById("mergeSort").style;
-    MergeButton.background = "black";
-    MergeButton.color = sortingAlgorithm === "MergeSort" ? "#3e8e41" : "black";
-    MergeButton.cursor = "default";
-
-    document.getElementById("binaryInsertionSort").disabled = true;
-    const BinaryInsertionButton = document.getElementById("binaryInsertionSort")
-      .style;
-    BinaryInsertionButton.background = "black";
-    BinaryInsertionButton.color =
-      sortingAlgorithm === "BinaryInsertionSort" ? "#3e8e41" : "black";
-    BinaryInsertionButton.cursor = "default";
-
-    document.getElementById("radixSort").disabled = true;
-    const RadixButton = document.getElementById("radixSort").style;
-    RadixButton.background = "black";
-    RadixButton.color = sortingAlgorithm === "RadixSort" ? "#3e8e41" : "black";
-    RadixButton.cursor = "default";
-
-    document.getElementById("heapSort").disabled = true;
-    const heapButton = document.getElementById("heapSort").style;
-    heapButton.background = "black";
-    heapButton.color = sortingAlgorithm === "HeapSort" ? "#3e8e41" : "black";
-    heapButton.cursor = "default";
-
-    document.getElementById("cocktailSort").disabled = true;
-    const cockButton = document.getElementById("cocktailSort").style;
-    cockButton.background = "black";
-    cockButton.color =
-      sortingAlgorithm === "CocktailSort" ? "#3e8e41" : "black";
-    cockButton.cursor = "default";
+  disableSortButtons(algorithmName) {
+    for (let i = 0; i < this.state.algorithmSets.length; ++i) {
+      document.getElementById(this.state.algorithmSets[i]).disabled = true;
+      const buttonStyle = document.getElementById(this.state.algorithmSets[i])
+        .style;
+      buttonStyle.background = "black";
+      buttonStyle.color =
+        algorithmName === this.state.algorithmSets[i] ? "#3e8e41" : "black";
+      buttonStyle.cursor = "default";
+    }
   }
 
   restoreShffling() {
-    document.getElementById("shuffling").disabled = false;
-    const shuffButton = document.getElementById("shuffling").style;
+    document.getElementById("Shuffling").disabled = false;
+    const shuffButton = document.getElementById("Shuffling").style;
     shuffButton.background = "#47535E";
     shuffButton.color = "white";
     shuffButton.cursor = "pointer";
 
-    document.getElementById("mode").disabled = false;
-    const modeButton = document.getElementById("mode").style;
+    document.getElementById("Mode").disabled = false;
+    const modeButton = document.getElementById("Mode").style;
     modeButton.background = "#47535E";
     modeButton.color = "white";
     modeButton.cursor = "pointer";
   }
 
   restoreButtons() {
-    document.getElementById("bubbleSort").disabled = false;
-    const buttonStyle = document.getElementById("bubbleSort").style;
-    buttonStyle.background = "#47535E";
-    buttonStyle.color = "white";
-    buttonStyle.cursor = "pointer";
-
-    document.getElementById("selectionSort").disabled = false;
-    const SelectionButton = document.getElementById("selectionSort").style;
-    SelectionButton.background = "#47535E";
-    SelectionButton.color = "white";
-    SelectionButton.cursor = "pointer";
-
-    document.getElementById("quickSort").disabled = false;
-    const QuickButton = document.getElementById("quickSort").style;
-    QuickButton.background = "#47535E";
-    QuickButton.color = "white";
-    QuickButton.cursor = "pointer";
-
-    document.getElementById("insertionSort").disabled = false;
-    const InsertionButton = document.getElementById("insertionSort").style;
-    InsertionButton.background = "#47535E";
-    InsertionButton.color = "white";
-    InsertionButton.cursor = "pointer";
-
-    document.getElementById("mergeSort").disabled = false;
-    const MergeButton = document.getElementById("mergeSort").style;
-    MergeButton.background = "#47535E";
-    MergeButton.color = "white";
-    MergeButton.cursor = "pointer";
-
-    document.getElementById("binaryInsertionSort").disabled = false;
-    const BinaryInsertionButton = document.getElementById("binaryInsertionSort")
-      .style;
-    BinaryInsertionButton.background = "#47535E";
-    BinaryInsertionButton.color = "white";
-    BinaryInsertionButton.cursor = "pointer";
-
-    document.getElementById("radixSort").disabled = false;
-    const RadixButton = document.getElementById("radixSort").style;
-    RadixButton.background = "#47535E";
-    RadixButton.color = "white";
-    RadixButton.cursor = "pointer";
-
-    document.getElementById("heapSort").disabled = false;
-    const heapButton = document.getElementById("heapSort").style;
-    heapButton.background = "#47535E";
-    heapButton.color = "white";
-    heapButton.cursor = "pointer";
-
-    document.getElementById("cocktailSort").disabled = false;
-    const cockButton = document.getElementById("cocktailSort").style;
-    cockButton.background = "#47535E";
-    cockButton.color = "white";
-    cockButton.cursor = "pointer";
+    for (let i = 0; i < this.state.algorithmSets.length; ++i) {
+      document.getElementById(this.state.algorithmSets[i]).disabled = false;
+      const buttonStyle = document.getElementById(this.state.algorithmSets[i])
+        .style;
+      buttonStyle.background = "#47535E";
+      buttonStyle.color = "white";
+      buttonStyle.cursor = "pointer";
+    }
   }
 
   sort(sortingAlgorithm) {
@@ -219,10 +125,10 @@ class Visualizer extends React.Component {
       Animation_speed_ms = 0.25;
     } else if (sortingAlgorithm === "RadixSort") {
       animations = getRadixSortAnimations(this.state.array);
-      Animation_speed_ms = 0.8;
+      Animation_speed_ms = 0.7;
     } else if (sortingAlgorithm === "HeapSort") {
       animations = getHeapSortAnimations(this.state.array);
-      Animation_speed_ms = 0.8;
+      Animation_speed_ms = 0.7;
     } else if (sortingAlgorithm === "CocktailSort") {
       animations = getCocktailSortAnimations(this.state.array);
       Animation_speed_ms = 0.15;
@@ -308,7 +214,7 @@ class Visualizer extends React.Component {
 
         <div className="buttons">
           <button
-            id="shuffling"
+            id="Shuffling"
             style={{
               position: "relative",
               top: `${(0 * (window_height - 20)) / Total_buttons}px`
@@ -319,7 +225,7 @@ class Visualizer extends React.Component {
           </button>
 
           <button
-            id="mode"
+            id="Mode"
             style={{
               position: "relative",
               top: `${(0.01 * (window_height - 20)) / Total_buttons}px`
@@ -329,7 +235,7 @@ class Visualizer extends React.Component {
             Change Display Mode
           </button>
           <button
-            id="binaryInsertionSort"
+            id="BinaryInsertionSort"
             style={{
               position: "relative",
               top: `${(0.02 * (window_height - 20)) / Total_buttons}px`
@@ -339,7 +245,7 @@ class Visualizer extends React.Component {
             Binary Insertion Sort
           </button>
           <button
-            id="selectionSort"
+            id="SelectionSort"
             style={{
               position: "relative",
               top: `${(0.035 * (window_height - 20)) / Total_buttons}px`
@@ -349,7 +255,7 @@ class Visualizer extends React.Component {
             Selection Sort
           </button>
           <button
-            id="insertionSort"
+            id="InsertionSort"
             style={{
               position: "relative",
               top: `${(0.045 * (window_height - 20)) / Total_buttons}px`
@@ -359,7 +265,7 @@ class Visualizer extends React.Component {
             Insertion Sort
           </button>
           <button
-            id="cocktailSort"
+            id="CocktailSort"
             style={{
               position: "relative",
               top: `${(0.055 * (window_height - 20)) / Total_buttons}px`
@@ -369,7 +275,7 @@ class Visualizer extends React.Component {
             Cocktail Sort
           </button>
           <button
-            id="bubbleSort"
+            id="BubbleSort"
             style={{
               position: "relative",
               top: `${(0.07 * (window_height - 20)) / Total_buttons}px`
@@ -379,7 +285,7 @@ class Visualizer extends React.Component {
             Bubble Sort
           </button>
           <button
-            id="mergeSort"
+            id="MergeSort"
             style={{
               position: "relative",
               top: `${(0.08 * (window_height - 20)) / Total_buttons}px`
@@ -389,7 +295,7 @@ class Visualizer extends React.Component {
             Merge Sort
           </button>
           <button
-            id="quickSort"
+            id="QuickSort"
             style={{
               position: "relative",
               top: `${(0.095 * (window_height - 20)) / Total_buttons}px`
@@ -399,7 +305,7 @@ class Visualizer extends React.Component {
             Quick Sort
           </button>
           <button
-            id="radixSort"
+            id="RadixSort"
             style={{
               position: "relative",
               top: `${(0.11 * (window_height - 20)) / Total_buttons}px`
@@ -409,7 +315,7 @@ class Visualizer extends React.Component {
             Radix Sort
           </button>
           <button
-            id="heapSort"
+            id="HeapSort"
             style={{
               position: "relative",
               top: `${(0.12 * (window_height - 20)) / Total_buttons}px`
@@ -424,9 +330,7 @@ class Visualizer extends React.Component {
   }
 }
 
-// From https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
 function randomIntFromInterval(min, max) {
-  // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
